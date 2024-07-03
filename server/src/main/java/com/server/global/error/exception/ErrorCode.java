@@ -18,6 +18,7 @@ public enum ErrorCode {
     // User
     EMAIL_DUPLICATION(400, "Email is Duplication"),
     PHONE_DUPLICATION(400, "Phone Number is Duplication"),
+    LOGIN_ID_DUPLICATION(400, "LoginId is Duplication"),
     LOGIN_INPUT_INVALID(400, "Login input is invalid"),
 
     // Ticket
