@@ -27,7 +27,7 @@ public class CustomAuthenticationFilter extends AbstractAuthenticationProcessing
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException, IOException {
 
-        if(isPost(request)) {
+        if(!isPost(request)) {
             throw new IllegalStateException("Authentication is not supported");
         }
 
