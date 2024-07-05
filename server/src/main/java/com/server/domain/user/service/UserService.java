@@ -8,6 +8,7 @@ import com.server.domain.user.exception.LoginIdDuplicationException;
 import com.server.domain.user.exception.MemberNotFoundException;
 import com.server.domain.user.exception.PhoneNumDuplicationException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
