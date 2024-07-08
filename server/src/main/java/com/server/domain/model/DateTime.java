@@ -8,8 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 
 @Embeddable
 @Getter
@@ -28,13 +28,19 @@ public class DateTime {
     }
 
     public LocalDate toLocalDate(String dateValue) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일");
-        return LocalDate.parse(dateValue, formatter);
+        return LocalDate.parse(dateValue);
     }
 
     public LocalTime toLocalTime(String timeValue) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH시 mm분");
         return LocalTime.parse(timeValue);
+    }
+
+    public LocalDateTime toTimeOnSale(DateTime startDateTime) {
+        return LocalDateTime.of(toLocalDate(startDateTime.date), toLocalTime(startDateTime.time)).minusDays(7);
+    }
+
+    public LocalDateTime toTimeOffSale(DateTime startDateTime) {
+        return LocalDateTime.of(toLocalDate(startDateTime.date), toLocalTime(startDateTime.time)).minusDays(1);
     }
 
 }
