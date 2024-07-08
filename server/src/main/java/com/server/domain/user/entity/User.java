@@ -2,6 +2,7 @@ package com.server.domain.user.entity;
 
 import com.server.domain.model.Address;
 import com.server.domain.model.Email;
+import com.server.domain.ticket.entity.Ticket;
 import com.server.domain.user.dto.UserDto;
 import jakarta.persistence.*;
 import lombok.*;
@@ -9,6 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -56,6 +58,9 @@ public class User implements UserDetails {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
 
+    @OneToMany(mappedBy = "user")
+    private List<Ticket> tickets = new ArrayList<>();
+
     @Builder
     public User(String realName, String loginId, String password, Email email, String phoneNum, Address address) {
         this.realName = realName;
@@ -69,6 +74,10 @@ public class User implements UserDetails {
 
     public void updateAddress(UserDto.ModifyAddressReq dto) {
         this.address = dto.getAddress();
+    }
+
+    public void addTicket(Ticket ticket) {
+        this.tickets.add(ticket);
     }
 
     @Override
