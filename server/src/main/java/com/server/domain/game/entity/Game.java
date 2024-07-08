@@ -1,5 +1,6 @@
 package com.server.domain.game.entity;
 
+import com.server.domain.game.dto.GameDto;
 import com.server.domain.model.DateTime;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -7,7 +8,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -37,9 +37,6 @@ public class Game {
     @Embedded
     private DateTime startDateTime;
 
-    @Column
-    private String gameDay;
-
     @Column(nullable = false, updatable = false)
     private Integer priceGrade;
 
@@ -56,5 +53,19 @@ public class Game {
         this.awayTeam = awayTeamName;
         this.fieldName = "한화생명이글스파크";
         this.startDateTime = startDateTime;
+        this.priceGrade = priceGrade;
+        this.timeOnSale = startDateTime.toTimeOnSale(startDateTime);
+        this.timeOffSale = startDateTime.toTimeOffSale(startDateTime);
     }
+
+    public void modifyStartDateTime(GameDto.ModifyGameTimeReq dto) {
+        this.startDateTime = dto.getStartDateTime();
+        this.timeOnSale = startDateTime.toTimeOnSale(startDateTime);
+        this.timeOnSale = startDateTime.toTimeOffSale(startDateTime);
+    }
+
+    public void modifyPriceGrade(GameDto.ModifyPriceGradeReq dto) {
+        this.priceGrade = dto.getPriceGrade();
+    }
+
 }

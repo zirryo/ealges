@@ -1,5 +1,7 @@
-package com.server.domain.game.entity;
+package com.server.domain.game.dto;
 
+import com.server.domain.game.entity.Game;
+import com.server.domain.game.entity.TeamInfo;
 import com.server.domain.model.DateTime;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AccessLevel;
@@ -46,13 +48,40 @@ public class GameDto {
 
     @Getter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
-    public static class ModifyGameTime {
+    public static class ModifyGameTimeReq {
 
         private DateTime startDateTime;
 
         @Builder
-        public ModifyGameTime(DateTime startDateTime) {
+        public ModifyGameTimeReq(DateTime startDateTime) {
             this.startDateTime = startDateTime;
+        }
+
+    }
+
+    @Getter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class ModifyPriceGradeReq {
+        private Integer priceGrade;
+
+        @Builder
+        public ModifyPriceGradeReq(Integer priceGrade) {
+            this.priceGrade = priceGrade;
+        }
+
+    }
+
+    @Getter
+    public static class Res {
+
+        private final String awayTeam;
+        private final DateTime startDateTime;
+        private final Integer priceGrade;
+
+        public Res(Game game) {
+            this.awayTeam = game.getAwayTeam().name();
+            this.startDateTime = game.getStartDateTime();
+            this.priceGrade = game.getPriceGrade();
         }
 
     }
