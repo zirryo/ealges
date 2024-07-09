@@ -41,7 +41,6 @@ public class GameService {
         gameRepository.save(game);
     }
 
-
     public void deleteGame(long id) {
         final Game game = findById(id);
         gameRepository.delete(game);

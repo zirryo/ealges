@@ -3,7 +3,9 @@ package com.server.domain.game.dto;
 import com.server.domain.game.entity.Game;
 import com.server.domain.game.entity.TeamInfo;
 import com.server.domain.model.DateTime;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,16 +17,16 @@ public class GameDto {
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class GameReq {
 
-        @NotEmpty
+        @NotNull
         private TeamInfo homeTeam;
 
-        @NotEmpty
+        @NotNull
         private TeamInfo awayTeam;
 
-        @NotEmpty
+        @Valid
         private DateTime startDateTime;
 
-        @NotEmpty
+        @NotNull
         private Integer priceGrade;
 
         @Builder
@@ -50,6 +52,7 @@ public class GameDto {
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class ModifyGameTimeReq {
 
+        @Valid
         private DateTime startDateTime;
 
         @Builder
@@ -62,10 +65,12 @@ public class GameDto {
     @Getter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class ModifyPriceGradeReq {
-        private Integer priceGrade;
+
+        @NotNull
+        private int priceGrade;
 
         @Builder
-        public ModifyPriceGradeReq(Integer priceGrade) {
+        public ModifyPriceGradeReq(int priceGrade) {
             this.priceGrade = priceGrade;
         }
 

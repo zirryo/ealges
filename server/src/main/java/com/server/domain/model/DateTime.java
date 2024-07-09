@@ -2,6 +2,7 @@ package com.server.domain.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,9 +18,12 @@ import java.time.LocalTime;
 public class DateTime {
 
     @Column
+    @NotEmpty
     private String date;
 
-    @Column String time;
+    @Column
+    @NotEmpty
+    private String time;
 
     @Builder
     public DateTime(String date, String time) {
