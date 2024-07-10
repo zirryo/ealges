@@ -25,7 +25,7 @@ public class GameController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity getGame(@PathVariable Long id) {
+    public ResponseEntity getGame(@PathVariable("id") Long id) {
         GameDto.Res response = new GameDto.Res(gameService.findById(id));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -45,7 +45,7 @@ public class GameController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteGame(@PathVariable Long id) {
+    public ResponseEntity deleteGame(@PathVariable("id") Long id) {
         gameService.deleteGame(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

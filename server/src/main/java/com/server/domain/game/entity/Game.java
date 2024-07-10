@@ -37,7 +37,7 @@ public class Game {
     @Embedded
     private DateTime startDateTime;
 
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = false)
     private Integer priceGrade;
 
     @Column
@@ -61,7 +61,7 @@ public class Game {
     public void modifyStartDateTime(GameDto.ModifyGameTimeReq dto) {
         this.startDateTime = dto.getStartDateTime();
         this.timeOnSale = startDateTime.toTimeOnSale(startDateTime);
-        this.timeOnSale = startDateTime.toTimeOffSale(startDateTime);
+        this.timeOffSale = startDateTime.toTimeOffSale(startDateTime);
     }
 
     public void modifyPriceGrade(GameDto.ModifyPriceGradeReq dto) {
