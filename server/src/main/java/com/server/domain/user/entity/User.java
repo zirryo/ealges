@@ -1,6 +1,7 @@
 package com.server.domain.user.entity;
 
 import com.server.domain.model.Address;
+import com.server.domain.model.Auditable;
 import com.server.domain.model.Email;
 import com.server.domain.ticket.entity.Ticket;
 import com.server.domain.user.dto.UserDto;
@@ -12,7 +13,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 
@@ -20,8 +20,7 @@ import java.util.List;
 @Table
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@EqualsAndHashCode(of = {"userId"})
-public class User implements UserDetails {
+public class User extends Auditable implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,14 +48,6 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private UserStatus status;
-
-    @Column
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdAt;
-
-    @Column
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updatedAt;
 
     @OneToMany(mappedBy = "user")
     private List<Ticket> tickets = new ArrayList<>();
