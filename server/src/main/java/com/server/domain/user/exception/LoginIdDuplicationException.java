@@ -6,7 +6,7 @@ import com.server.global.error.exception.InvalidValueException;
 public class LoginIdDuplicationException extends InvalidValueException {
 
     public LoginIdDuplicationException(final String value) {
-        super(value, ErrorCode.LOGIN_ID_DUPLICATION);
+        super(value + " has already been registered", ErrorCode.LOGIN_ID_DUPLICATION);
     }
 
 }

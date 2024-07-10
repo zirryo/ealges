@@ -6,7 +6,7 @@ import com.server.global.error.exception.InvalidValueException;
 public class PhoneNumDuplicationException extends InvalidValueException {
 
     public PhoneNumDuplicationException(final String value) {
-        super(value, ErrorCode.PHONE_DUPLICATION);
+        super(value + " has already been registered", ErrorCode.PHONE_DUPLICATION);
     }
 
 }
