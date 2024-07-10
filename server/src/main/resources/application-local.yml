@@ -1,21 +1,22 @@
 spring:
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
   datasource:
-    url: jdbc:h2:mem:test
-    username: db_user
-    password:
+    url: jdbc:h2:mem:testdb
     driver-class-name: org.h2.Driver
+    username: sa
+    password: 1234
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: create-drop
     show-sql: true
     properties:
       hibernate:
         format_sql: true
     defer-datasource-initialization: true
-  h2:
-    console:
-      enabled: true
-      path: /h2
 logging:
   level:
     org.hibernate.SQL: debug
