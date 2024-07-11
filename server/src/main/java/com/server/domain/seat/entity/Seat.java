@@ -22,7 +22,7 @@ public class Seat {
     private Integer seatLogicalId;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "gameId", nullable = false, updatable = false)
     private Game game;
 
