@@ -1,7 +1,6 @@
 package com.server.domain.ticket.service;
 
 import com.server.domain.ticket.dao.TicketRepository;
-import com.server.domain.ticket.dto.TicketDto;
 import com.server.domain.ticket.entity.Ticket;
 import com.server.domain.ticket.entity.TicketStatus;
 import com.server.domain.user.entity.User;
@@ -21,8 +20,8 @@ public class TicketService {
 
     private final TicketRepository ticketRepository;
 
-    public void createTicket(TicketDto.Req dto) {
-        ticketRepository.save(dto.toEntity());
+    public void createTicket(Ticket ticket) {
+        ticketRepository.save(ticket);
     }
 
     @Transactional(readOnly = true)
@@ -32,16 +31,17 @@ public class TicketService {
         return ticket.get();
     }
 
-    public void cancelTicket(Long id) {
-        final Ticket ticket = findById(id);
-        ticket.modifyTicketStatus();
+    public void updateTicket(Ticket ticket) {
         ticketRepository.save(ticket);
     }
 
     @Transactional(readOnly = true)
-    public Page<Ticket> findTickets(User user, boolean isCompleted, int page, int size) {
-        if (isCompleted) return ticketRepository.findAllByUserAndStatus(user, TicketStatus.COMPLETED, PageRequest.of(page, size));
-        else return ticketRepository.findAllByUserAndStatus(user, TicketStatus.CANCELED, PageRequest.of(page, size));
+    public Page<Ticket> findTicketsByUser(User user, boolean isCompleted, int page, int size) {
+        if (isCompleted) {
+            return ticketRepository.findAllByUserAndStatus(user, TicketStatus.COMPLETED, PageRequest.of(page, size));
+        } else {
+            return ticketRepository.findAllByUserAndStatus(user, TicketStatus.CANCELED, PageRequest.of(page, size));
+        }
     }
 
 }

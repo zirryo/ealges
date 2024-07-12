@@ -3,8 +3,8 @@ package com.server.domain.ticket.dto;
 import com.server.domain.seat.entity.Seat;
 import com.server.domain.ticket.entity.Ticket;
 import com.server.domain.ticket.entity.TicketStatus;
-import com.server.domain.user.entity.User;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,34 +16,22 @@ public class TicketDto {
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class Req {
 
-        @NotEmpty
+        @NotNull
         private Long gameId;
 
         @NotEmpty
-        private Seat seat;
-
-        @NotEmpty
-        private User user;
+        private Long seatId;
 
         @NotEmpty
         private String billType;
 
         @Builder
-        public Req(Long gameId, User user, Seat seat, String billType) {
+        public Req(Long gameId, Long seatId, String billType) {
             this.gameId = gameId;
-            this.user = user;
-            this.seat = seat;
+            this.seatId = seatId;
             this.billType = billType;
         }
 
-        public Ticket toEntity() {
-            return Ticket.builder()
-                    .gameId(this.gameId)
-                    .seat(this.seat)
-                    .user(this.user)
-                    .billType(this.billType)
-                    .build();
-        }
     }
 
     @Getter

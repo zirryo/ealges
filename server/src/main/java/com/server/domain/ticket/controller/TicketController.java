@@ -2,9 +2,7 @@ package com.server.domain.ticket.controller;
 
 import com.server.domain.ticket.dto.TicketDto;
 import com.server.domain.ticket.entity.Ticket;
-import com.server.domain.ticket.service.TicketService;
-import com.server.domain.user.entity.User;
-import com.server.domain.user.service.UserService;
+import com.server.domain.ticket.service.TicketFacadeService;
 import com.server.global.common.dto.MultiResponseDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,26 +20,25 @@ import java.util.List;
 @Validated
 public class TicketController {
 
-    private final TicketService ticketService;
-    private final UserService userService;
+    private final TicketFacadeService ticketFacadeService;
 
     @PostMapping
-    public ResponseEntity createTicket(@Valid @RequestBody TicketDto.Req dto) {
-        ticketService.createTicket(dto);
+    public ResponseEntity createTicket(@Valid @RequestBody TicketDto.Req dto, @RequestParam long userId) {
+        ticketFacadeService.reserveTicket(dto, userId);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity cancelTicket(@PathVariable("id") long ticketId) {
-        ticketService.cancelTicket(ticketId);
+        ticketFacadeService.cancelTicket(ticketId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity getTickets(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "true") boolean completed) {
-        User loginUser = userService.getLoginUser();
+    public ResponseEntity getTickets(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "true") boolean completed, @RequestParam long userId) {
         int defaultPageSize = 5;
-        Page<Ticket> ticketPage = ticketService.findTickets(loginUser, completed, page, defaultPageSize);
+
+        Page<Ticket> ticketPage = ticketFacadeService.findTickets(userId, completed, page, defaultPageSize);
         List<Ticket> ticketList = ticketPage.getContent();
         return new ResponseEntity<>(new MultiResponseDto<>(ticketList, ticketPage), HttpStatus.OK);
     }
