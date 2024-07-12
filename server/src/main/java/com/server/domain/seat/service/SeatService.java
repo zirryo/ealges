@@ -1,7 +1,6 @@
 package com.server.domain.seat.service;
 
 import com.server.domain.seat.dao.SeatRepository;
-import com.server.domain.seat.dto.SeatDto;
 import com.server.domain.seat.entity.Seat;
 import com.server.global.error.exception.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -24,8 +23,8 @@ public class SeatService {
         return seat.get();
     }
 
-    public void createSeat(SeatDto.Req dto) {
-        seatRepository.save(dto.toEntity());
+    public void createSeat(Seat seat) {
+        seatRepository.save(seat);
     }
 
 }

@@ -17,8 +17,7 @@ public class GameService {
 
     private final GameRepository gameRepository;
 
-
-    public void createGame(GameDto.GameReq dto) {
+    public void createByGameDto(GameDto.GameReq dto) {
         gameRepository.save(dto.toEntity());
     }
 
@@ -29,20 +28,11 @@ public class GameService {
         return game.get();
     }
 
-    public void modifyGameStartDateTime(long id, GameDto.ModifyGameTimeReq dto) {
-        final Game game = findById(id);
-        game.modifyStartDateTime(dto);
+    public void updateGame(Game game) {
         gameRepository.save(game);
     }
 
-    public void modifyPriceGrade(long id, GameDto.ModifyPriceGradeReq dto) {
-        final Game game = findById(id);
-        game.modifyPriceGrade(dto);
-        gameRepository.save(game);
-    }
-
-    public void deleteGame(long id) {
-        final Game game = findById(id);
+    public void deleteGame(Game game) {
         gameRepository.delete(game);
     }
 

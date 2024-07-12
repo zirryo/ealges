@@ -2,6 +2,7 @@ package com.server.domain.game.entity;
 
 import com.server.domain.game.dto.GameDto;
 import com.server.domain.model.DateTime;
+import com.server.domain.seat.entity.Seat;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -9,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table
@@ -46,6 +48,9 @@ public class Game {
     @Column
     private LocalDateTime timeOffSale;
 
+    @OneToMany(mappedBy = "game", cascade = CascadeType.REMOVE)
+    private Set<Seat> seats;
+
     @Builder
     public Game(TeamInfo homeTeamName, TeamInfo awayTeamName, DateTime startDateTime, Integer priceGrade) {
         this.leagueName = "2024 KBO 리그";
@@ -66,6 +71,10 @@ public class Game {
 
     public void modifyPriceGrade(GameDto.ModifyPriceGradeReq dto) {
         this.priceGrade = dto.getPriceGrade();
+    }
+
+    public void addSeat(Seat seat) {
+        seats.add(seat);
     }
 
 }
