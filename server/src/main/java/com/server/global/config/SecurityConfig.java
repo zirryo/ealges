@@ -13,6 +13,8 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -38,14 +40,22 @@ public class SecurityConfig{
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
+//                .httpBasic(AbstractHttpConfigurer::disable)
+//                .formLogin(AbstractHttpConfigurer::disable)
+                .formLogin(formLogin -> formLogin.loginPage("/login").defaultSuccessUrl("/"))
                 .cors(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(request -> request
-                        .requestMatchers("/**").permitAll()
-                        .anyRequest().authenticated())
+                .headers((headerConfig) -> headerConfig.frameOptions((HeadersConfigurer.FrameOptionsConfig::sameOrigin))) // h2 사용을 위한 프레임 허용
+//                .authorizeHttpRequests(request -> request
+//                        .requestMatchers("/**").permitAll())
+//                        .anyRequest().permitAll())
+                .logout((logout) -> logout
+                        .logoutSuccessUrl("/login")
+                        .invalidateHttpSession(true))
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(ajaxAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(config -> config
                         .authenticationEntryPoint(authenticationEntryPoint)
@@ -61,7 +71,6 @@ public class SecurityConfig{
         customAuthenticationFilter.setAuthenticationSuccessHandler(customAuthenticationSuccessHandler);
         customAuthenticationFilter.setAuthenticationFailureHandler(customAuthenticationFailureHandler);
 
-        // **
         customAuthenticationFilter.setSecurityContextRepository(
                 new DelegatingSecurityContextRepository(
                         new RequestAttributeSecurityContextRepository(),

@@ -2,7 +2,6 @@ package com.server.global.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.server.global.error.exception.InvalidValueException;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Data;
@@ -33,13 +32,14 @@ public class CustomAuthenticationFilter extends AbstractAuthenticationProcessing
 
         AccountDto accountDto = objectMapper.readValue(request.getReader(), AccountDto.class);
 
-        if (!StringUtils.hasLength(accountDto.loginId) || !StringUtils.hasLength(accountDto.password)) {
+        if (!StringUtils.hasLength(accountDto.getLoginId()) || !StringUtils.hasLength(accountDto.getPassword())) {
             throw new InvalidValueException("아이디 혹은 비밀번호가 비어있습니다.");
         }
 
-        CustomAuthenticationToken authRequest = new CustomAuthenticationToken(accountDto.loginId, accountDto.password);
+        CustomAuthenticationToken token = new CustomAuthenticationToken(
+                accountDto.getLoginId(), accountDto.getPassword());
 
-        return getAuthenticationManager().authenticate(authRequest);
+        return getAuthenticationManager().authenticate(token);
 
     }
 

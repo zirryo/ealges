@@ -8,7 +8,10 @@ import com.server.domain.user.exception.LoginIdDuplicationException;
 import com.server.domain.user.exception.MemberNotFoundException;
 import com.server.domain.user.exception.PhoneNumDuplicationException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationServiceException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,7 +55,19 @@ public class UserService {
             throw new PhoneNumDuplicationException(dto.getPhoneNum());
         }
 
+        dto.setPassword(encodePassword(dto.getPassword()));
         userRepository.save(dto.toEntity());
+    }
+
+    public User getLoginUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String name = authentication.getName();
+        Optional<User> user = userRepository.findByLoginId(name);
+        return user.orElseThrow(() -> new AuthenticationServiceException("Authentication exception"));
+    }
+
+    private String encodePassword(String password) {
+        return new BCryptPasswordEncoder().encode(password);
     }
 
 }

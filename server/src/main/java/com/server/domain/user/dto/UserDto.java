@@ -5,10 +5,7 @@ import com.server.domain.model.Email;
 import com.server.domain.user.entity.User;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 public class UserDto {
 
@@ -23,6 +20,7 @@ public class UserDto {
         private String loginId;
 
         @NotEmpty
+        @Setter
         private String password;
 
         @Valid
@@ -75,7 +73,6 @@ public class UserDto {
 
         private final String realName;
         private final String loginId;
-        private final String password;
         private final Email email;
         private final String phoneNum;
         private final Address address;
@@ -83,7 +80,6 @@ public class UserDto {
         public Res(User user) {
             this.realName = user.getRealName();
             this.loginId = user.getLoginId();
-            this.password = user.getPassword();
             this.email = user.getEmail();
             this.phoneNum = user.getPhoneNum();
             this.address = user.getAddress();

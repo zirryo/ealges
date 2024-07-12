@@ -49,7 +49,7 @@ public class User extends Auditable implements UserDetails {
     @Column(nullable = false)
     private UserStatus status;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
     private List<Ticket> tickets = new ArrayList<>();
 
     @Builder
