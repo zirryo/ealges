@@ -1,6 +1,7 @@
 package com.server.domain.ticket.dto;
 
-import com.server.domain.seat.entity.Seat;
+import com.server.domain.game.dto.GameDto;
+import com.server.domain.seat.dto.SeatDto;
 import com.server.domain.ticket.entity.Ticket;
 import com.server.domain.ticket.entity.TicketStatus;
 import jakarta.validation.constraints.NotNull;
@@ -38,12 +39,17 @@ public class TicketDto {
 
         private final long ticketId;
         private final TicketStatus status;
-        private final Seat seat;
+        private final String billType;
+        private final GameDto.Res gameInfo;
+        private final SeatDto.Res seatInfo;
+
 
         public Res(Ticket ticket) {
             this.ticketId = ticket.getTicketId();
             this.status = ticket.getStatus();
-            this.seat = ticket.getSeat();
+            this.billType = ticket.getBillType();
+            this.gameInfo = new GameDto.Res(ticket.getGame());
+            this.seatInfo = new SeatDto.Res(ticket.getSeat());
         }
 
     }

@@ -79,12 +79,14 @@ public class GameDto {
     @Getter
     public static class Res {
 
-        private final String awayTeam;
+        private final TeamInfo homeTeam;
+        private final TeamInfo awayTeam;
         private final DateTime startDateTime;
         private final Integer priceGrade;
 
         public Res(Game game) {
-            this.awayTeam = game.getAwayTeam().name();
+            this.homeTeam = game.getHomeTeam();
+            this.awayTeam = game.getAwayTeam();
             this.startDateTime = game.getStartDateTime();
             this.priceGrade = game.getPriceGrade();
         }

@@ -2,7 +2,7 @@ package com.server.domain.seat.dto;
 
 import com.server.domain.game.entity.Game;
 import com.server.domain.seat.entity.Seat;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,10 +14,10 @@ public class SeatDto {
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class Req {
 
-        @NotEmpty
+        @NotNull
         private Integer seatLogicalId;
 
-        @NotEmpty
+        @NotNull
         private String blockName;
 
         private Game game;
@@ -44,12 +44,10 @@ public class SeatDto {
 
         private final long seatLogicalId;
         private final String blockName;
-        private final Game game;
 
         public Res(Seat seat) {
             this.seatLogicalId = seat.getSeatLogicalId();
             this.blockName = seat.getBlockName();
-            this.game = seat.getGame();
         }
 
     }

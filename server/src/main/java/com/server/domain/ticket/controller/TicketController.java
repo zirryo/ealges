@@ -33,7 +33,13 @@ public class TicketController {
     public ResponseEntity cancelTicket(@PathVariable("id") long ticketId) {
         ticketFacadeService.cancelTicket(ticketId);
         String response = String.format("티켓번호 %d번 티켓이 취소되었습니다.", ticketId);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity getTicket(@PathVariable("id") long ticketId) {
+        TicketDto.Res response = new TicketDto.Res(ticketFacadeService.getTicket(ticketId));
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping
