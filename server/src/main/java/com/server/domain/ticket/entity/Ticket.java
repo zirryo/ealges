@@ -28,7 +28,7 @@ public class Ticket extends Auditable {
     private TicketStatus status;
 
     @OneToOne
-    @JoinColumn(name = "ticketId")
+    @JoinColumn(name = "seatId")
     private Seat seat;
 
     @ManyToOne(fetch = FetchType.LAZY)
