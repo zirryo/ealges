@@ -25,6 +25,7 @@ public class TicketFacadeService {
 
     public void reserveTicket(TicketDto.Req dto, long userId) {
         Seat seat = seatService.findById(dto.getSeatId());
+        seatService.occupySeat(seat);
         Game game = gameService.findById(dto.getGameId());
         User user = userService.findById(userId);
         Ticket ticket = Ticket.builder().game(game).seat(seat).user(user).billType(dto.getBillType()).build();
@@ -39,6 +40,7 @@ public class TicketFacadeService {
     public void cancelTicket(long ticketId) {
         Ticket ticket = ticketService.findById(ticketId);
         ticket.modifyTicketStatus();
+        seatService.releaseSeat(ticket.getSeat());
         ticketService.updateTicket(ticket);
     }
 

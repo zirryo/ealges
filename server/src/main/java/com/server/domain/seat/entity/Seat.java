@@ -40,4 +40,8 @@ public class Seat {
         this.isAvailable = true;
     }
 
+    public void modifyIsAvailable(boolean isAvailable) {
+        this.isAvailable = isAvailable;
+    }
+
 }

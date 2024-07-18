@@ -27,7 +27,7 @@ public class Ticket extends Auditable {
     @Enumerated(EnumType.STRING)
     private TicketStatus status;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "seatId")
     private Seat seat;
 
