@@ -3,7 +3,6 @@ package com.server.domain.ticket.dto;
 import com.server.domain.seat.entity.Seat;
 import com.server.domain.ticket.entity.Ticket;
 import com.server.domain.ticket.entity.TicketStatus;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -19,10 +18,10 @@ public class TicketDto {
         @NotNull
         private Long gameId;
 
-        @NotEmpty
+        @NotNull
         private Long seatId;
 
-        @NotEmpty
+        @NotNull
         private String billType;
 
         @Builder
