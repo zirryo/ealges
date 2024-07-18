@@ -27,7 +27,7 @@ public class TicketService {
     @Transactional(readOnly = true)
     public Ticket findById(Long id) {
         final Optional<Ticket> ticket = ticketRepository.findById(id);
-        ticket.orElseThrow(() -> new EntityNotFoundException(id + " not found"));
+        ticket.orElseThrow(() -> new EntityNotFoundException("Ticket number " + id + " not found"));
         return ticket.get();
     }
 

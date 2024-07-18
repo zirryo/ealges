@@ -25,12 +25,14 @@ public class TicketController {
     @PostMapping
     public ResponseEntity createTicket(@Valid @RequestBody TicketDto.Req dto, @RequestParam long userId) {
         ticketFacadeService.reserveTicket(dto, userId);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        String response = "티켓이 예매되었습니다.";
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity cancelTicket(@PathVariable("id") long ticketId) {
         ticketFacadeService.cancelTicket(ticketId);
+        String response = String.format("티켓번호 %d번 티켓이 취소되었습니다.", ticketId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
